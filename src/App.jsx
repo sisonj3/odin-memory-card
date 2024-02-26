@@ -5,6 +5,20 @@ function App() {
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
 
+  // Pokemon Image
+  const [sprite, setSprite] = useState('');
+
+  fetch('https://pokeapi.co/api/v2/pokemon/25', { mode: 'cors' })
+    .then(function (response){
+      return response.json();
+    })
+    .then(function (response) {
+      setSprite(response.sprites.other['official-artwork'].front_default);
+      console.log(sprite);
+    });
+  
+  /////////////////////////////
+
   let addPoint = () => {
     let newScore = score + 1;
 
@@ -34,6 +48,7 @@ function App() {
       </header>
 
       <main>
+        <img src={sprite} alt="Pikachu" />
         <button onClick={addPoint}>Add Point</button>
         <button onClick={resetScore}>Reset</button>
       </main>
