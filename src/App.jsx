@@ -1,23 +1,31 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './App.css'
+import MemoryGrid from './components/MemoryGrid'
+
+const artUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/';
 
 function App() {
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
+  const [sprites, setSprites] = useState([{sprite: `${artUrl}${1}.png`, index: 1}]);
 
-  // Pokemon Image
-  const [sprite, setSprite] = useState('');
+  let changePokemon = () => {
+    let list = []
 
-  fetch('https://pokeapi.co/api/v2/pokemon/25', { mode: 'cors' })
-    .then(function (response){
-      return response.json();
-    })
-    .then(function (response) {
-      setSprite(response.sprites.other['official-artwork'].front_default);
-      console.log(sprite);
-    });
-  
-  /////////////////////////////
+    for (let i = 0; i < 12; i++) {
+      let dexNumber = Math.floor(Math.random() * 1025) + 1;
+
+      let pokemon = {
+        sprite: `${artUrl}${dexNumber}.png`,
+        index: dexNumber
+      };
+
+      list.push(pokemon);        
+    }
+
+    console.log(list);
+    setSprites(list);
+  }
 
   let addPoint = () => {
     let newScore = score + 1;
@@ -29,7 +37,7 @@ function App() {
     }
   }
 
-  let resetScore = () => {
+  let resetGame = () => {
     setScore(0);
   }
 
@@ -47,11 +55,18 @@ function App() {
         </div>
       </header>
 
+      <button onClick={addPoint}>Add Point</button>
+
       <main>
-        <img src={sprite} alt="Pikachu" />
-        <button onClick={addPoint}>Add Point</button>
-        <button onClick={resetScore}>Reset</button>
+        <button onClick={changePokemon}>Start</button>
+
+        <MemoryGrid
+          gridSprites={sprites}
+        />
       </main>
+
+      
+      
     </>
   )
 }
