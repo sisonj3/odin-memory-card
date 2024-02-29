@@ -4,11 +4,16 @@ import MemoryGrid from './components/MemoryGrid'
 
 const artUrl = 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/';
 
+// List of items already selected
+let memory = [];
+
 function App() {
+  // States
   const [score, setScore] = useState(0);
   const [bestScore, setBestScore] = useState(0);
-  const [sprites, setSprites] = useState([{sprite: `${artUrl}${1}.png`, index: 1}]);
+  const [sprites, setSprites] = useState([]);
 
+  // Add check for same keys
   let changePokemon = () => {
     let list = []
 
@@ -23,7 +28,7 @@ function App() {
       list.push(pokemon);        
     }
 
-    console.log(list);
+    //console.log(list);
     setSprites(list);
   }
 
@@ -37,9 +42,31 @@ function App() {
     }
   }
 
-  let resetGame = () => {
-    setScore(0);
+  let scoring = (event) => {
+    let num = event.target.alt;
+
+    // Check if number is already in memory
+    if (!memory.includes(num)) {
+      // Add num to memory
+      memory.push(num);
+      console.log(memory);
+
+      // Add point
+      addPoint();
+    } else {
+      // Clear memory
+      memory = [];
+      setScore(0);
+    }
+
+    changePokemon();
+    event.preventDefault();
   }
+
+  // Initialize the images on the grid
+  useEffect(() => {
+    changePokemon();
+  }, []);
 
   return (
     <>
@@ -55,13 +82,10 @@ function App() {
         </div>
       </header>
 
-      <button onClick={addPoint}>Add Point</button>
-
       <main>
-        <button onClick={changePokemon}>Start</button>
-
         <MemoryGrid
           gridSprites={sprites}
+          scoringFunction={scoring}
         />
       </main>
 

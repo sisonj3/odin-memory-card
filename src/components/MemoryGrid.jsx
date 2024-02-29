@@ -1,9 +1,9 @@
-function MemoryGrid({ gridSprites }) {
+function MemoryGrid({ gridSprites, scoringFunction }) {
     return (
         <>
             {gridSprites.map((pokemon) => (
                 <div key={pokemon.index}>
-                    <img src={pokemon.sprite} alt={`pkmn#${pokemon.index}`} />
+                    <img onClick={scoringFunction} src={pokemon.sprite} alt={pokemon.index} />
                 </div>
             ))}
         </>
