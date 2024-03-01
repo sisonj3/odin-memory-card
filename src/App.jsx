@@ -15,17 +15,25 @@ function App() {
 
   // Add check for same keys
   let changePokemon = () => {
-    let list = []
+    let list = [];
+    // Use to check for duplicate keys
+    let keys = [];
 
     for (let i = 0; i < 12; i++) {
       let dexNumber = Math.floor(Math.random() * 1025) + 1;
+
+      // If dexNumber is in keys generate a new number
+      while (keys.includes(dexNumber)) {
+        dexNumber = Math.floor(Math.random() * 1025) + 1;
+      }
 
       let pokemon = {
         sprite: `${artUrl}${dexNumber}.png`,
         index: dexNumber
       };
 
-      list.push(pokemon);        
+      list.push(pokemon);
+      keys.push(dexNumber);
     }
 
     //console.log(list);
