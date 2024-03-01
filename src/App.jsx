@@ -79,12 +79,12 @@ function App() {
   return (
     <>
       <header>
-        <div>
+        <div className='left'>
           <h1>Memory Game</h1>
           <span>Get points by clicking on an image but don't click on any more than once!</span>
         </div>
         
-        <div>
+        <div className='right'>
           <span>Score: {score}</span>
           <span>Best Score: {bestScore}</span>
         </div>
